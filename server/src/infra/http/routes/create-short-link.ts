@@ -15,8 +15,8 @@ export const createShortLinkRoute: FastifyPluginAsyncZod = async (server) => {
 				body: createShortLinkInput,
 				response: {
 					201: z.object({
-						shortUrl: z.string(),
-						originalUrl: z.url(),
+						shortLink: z.string(),
+						originalLink: z.url(),
 					}),
 					400: z.object({
 						message: z.string(),
@@ -25,17 +25,17 @@ export const createShortLinkRoute: FastifyPluginAsyncZod = async (server) => {
 			},
 		},
 		async (request, reply) => {
-			const { originalUrl, shortUrl } = request.body;
+			const { originalLink, shortLink } = request.body;
 
-			const shortLink = await createShortLink({ originalUrl, shortUrl });
+			const shortLinkData = await createShortLink({ originalLink, shortLink });
 
-			if (!shortLink) {
+			if (!shortLinkData) {
 				return reply.status(400).send({
 					message: "Short URL already exists",
 				});
 			}
 
-			return reply.status(201).send(shortLink);
+			return reply.status(201).send(shortLinkData);
 		},
 	);
 };
