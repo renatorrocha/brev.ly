@@ -12,6 +12,8 @@ import {
 } from "fastify-type-provider-zod";
 import { env } from "@/env";
 import { createShortLinkRoute } from "./routes/create-short-link";
+import { deleteShortLinkRoute } from "./routes/delete-short-link";
+import { getAllShortLinksRoute } from "./routes/get-all-short-links";
 import { getShortLinkRoute } from "./routes/get-short-link";
 
 const server = fastify().withTypeProvider<ZodTypeProvider>();
@@ -60,6 +62,8 @@ server.register(scalarUI, {
 
 server.register(createShortLinkRoute);
 server.register(getShortLinkRoute);
+server.register(deleteShortLinkRoute);
+server.register(getAllShortLinksRoute);
 
 server.listen({ port: env.PORT, host: "0.0.0.0" }).then(() => {
 	console.log(`HTTP Server running on port ${env.PORT}!`);
