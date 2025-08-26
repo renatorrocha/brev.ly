@@ -1,5 +1,6 @@
 services:
-  brevly-postgres:
+  postgres:
+    container_name: brevly-postgres
     image: bitnami/postgresql:latest
     ports:
       - "5432:5432"
