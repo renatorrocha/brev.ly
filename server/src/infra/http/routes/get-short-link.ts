@@ -17,7 +17,7 @@ export const getShortLinkRoute: FastifyPluginAsyncZod = async (server) => {
 					201: z.object({
 						originalLink: z.url(),
 					}),
-					400: z.object({
+					404: z.object({
 						message: z.string(),
 					}),
 				},
@@ -29,8 +29,8 @@ export const getShortLinkRoute: FastifyPluginAsyncZod = async (server) => {
 			const shortLinkData = await getShortLink({ shortLink });
 
 			if (!shortLinkData) {
-				return reply.status(400).send({
-					message: "Short URL already exists",
+				return reply.status(404).send({
+					message: "Short URL not found",
 				});
 			}
 

@@ -1,6 +1,5 @@
 import { eq } from "drizzle-orm";
 import z from "zod";
-import { NotFound } from "@/app/functions/errors/not-found";
 import { db } from "@/infra/db";
 import { schema } from "@/infra/db/schemas";
 
@@ -18,7 +17,7 @@ export async function getShortLink(input: GetShortLinkInput) {
 	});
 
 	if (!shortLinkData) {
-		throw new NotFound();
+		return null;
 	}
 
 	return shortLinkData;
