@@ -15,6 +15,7 @@ import { createShortLinkRoute } from "./routes/create-short-link";
 import { deleteShortLinkRoute } from "./routes/delete-short-link";
 import { getAllShortLinksRoute } from "./routes/get-all-short-links";
 import { getShortLinkRoute } from "./routes/get-short-link";
+import { incrementAccessRoute } from "./routes/increment-access";
 
 const server = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -64,6 +65,7 @@ server.register(createShortLinkRoute);
 server.register(getShortLinkRoute);
 server.register(deleteShortLinkRoute);
 server.register(getAllShortLinksRoute);
+server.register(incrementAccessRoute);
 
 server.listen({ port: env.PORT, host: "0.0.0.0" }).then(() => {
 	console.log(`HTTP Server running on port ${env.PORT}!`);
