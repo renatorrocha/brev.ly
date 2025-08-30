@@ -9,8 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ShortLinkRouteImport } from './routes/$short-link'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ShortLinkRoute = ShortLinkRouteImport.update({
+  id: '/$short-link',
+  path: '/$short-link',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +25,39 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$short-link': typeof ShortLinkRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$short-link': typeof ShortLinkRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$short-link': typeof ShortLinkRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/$short-link'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/$short-link'
+  id: '__root__' | '/' | '/$short-link'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ShortLinkRoute: typeof ShortLinkRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/$short-link': {
+      id: '/$short-link'
+      path: '/$short-link'
+      fullPath: '/$short-link'
+      preLoaderRoute: typeof ShortLinkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +70,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ShortLinkRoute: ShortLinkRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
