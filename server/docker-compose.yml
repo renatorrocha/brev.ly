@@ -10,6 +10,9 @@ services:
       - POSTGRES_DB=brevly
     volumes:
       - "./docker:/docker-entrypoint-initdb.d"
+    networks:
+      - server
+      - db
 
 
   server:
@@ -21,14 +24,22 @@ services:
     ports:
       - $PORT:$PORT
     environment:
-      - PORT=$PORT
+      - $PORT:$PORT
       - DATABASE_URL=$DATABASE_URL
       - CLOUDFLARE_ACCOUNT_ID=$CLOUDFLARE_ACCOUNT_ID
       - CLOUDFLARE_ACCESS_KEY_ID=$CLOUDFLARE_ACCESS_KEY_ID
       - CLOUDFLARE_SECRET_ACCESS_KEY=$CLOUDFLARE_SECRET_ACCESS_KEY
       - CLOUDFLARE_BUCKET=$CLOUDFLARE_BUCKET
       - CLOUDFLARE_PUBLIC_URL=$CLOUDFLARE_PUBLIC_URL
+    networks:
+      - server
 
 volumes:
-  postgres:
+  db:
+
+networks:
+  server:
+    driver: bridge
+  db:
+    driver: bridge
 
