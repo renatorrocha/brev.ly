@@ -1,10 +1,16 @@
+import { cn } from "@/lib/utils";
 import { DownloadSimple } from "phosphor-react";
 import { LinkCard } from "./link-card";
 import { Button } from "./ui/button";
 
-export function AllLinks() {
+export function AllLinks({ className }: { className: string }) {
 	return (
-		<div className="bg-gray-100 p-6 rounded-lg w-full flex flex-col gap-5">
+		<div
+			className={cn(
+				"bg-gray-100 p-6 rounded-lg w-full flex flex-col gap-5",
+				className,
+			)}
+		>
 			<div className="flex items-center justify-between">
 				<h1 className="text-lg text-gray-600">Meus links</h1>
 
@@ -16,7 +22,6 @@ export function AllLinks() {
 
 			<div className="flex flex-col gap-3">
 				<LinkCard
-					id="1"
 					originalLink="https://www.google.com"
 					shortLink="https://www.asdasd.com"
 					clicks={10}

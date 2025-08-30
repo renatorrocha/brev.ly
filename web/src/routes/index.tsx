@@ -9,15 +9,15 @@ export const Route = createFileRoute("/")({
 
 function RouteComponent() {
 	return (
-		<div className="bg-gray-200 py-8 px-3 flex flex-col items-center justify-center">
-			<figure className="mb-6">
+		<div className="bg-gray-200 py-8 px-3 flex flex-col items-center justify-center max-w-7xl mx-auto">
+			<figure className="mb-6 lg:self-start">
 				<img src={Logo} alt="logo" />
 			</figure>
 
-			<div className="w-full flex flex-col gap-3">
-				<NewLinkForm />
+			<div className="w-full flex flex-col gap-3 lg:grid lg:grid-cols-3 lg:gap-5">
+				<NewLinkForm className="lg:col-span-1" />
 
-				<AllLinks />
+				<AllLinks className="lg:col-span-2" />
 			</div>
 		</div>
 	);
