@@ -13,6 +13,7 @@ import {
 import { env } from "@/env";
 import { createShortLinkRoute } from "./routes/create-short-link";
 import { deleteShortLinkRoute } from "./routes/delete-short-link";
+import { exportShortLinksRoute } from "./routes/export-short-links";
 import { getAllShortLinksRoute } from "./routes/get-all-short-links";
 import { getShortLinkRoute } from "./routes/get-short-link";
 import { incrementAccessRoute } from "./routes/increment-access";
@@ -66,6 +67,7 @@ server.register(getShortLinkRoute);
 server.register(deleteShortLinkRoute);
 server.register(getAllShortLinksRoute);
 server.register(incrementAccessRoute);
+server.register(exportShortLinksRoute);
 
 server.listen({ port: env.PORT, host: "0.0.0.0" }).then(() => {
 	console.log(`HTTP Server running on port ${env.PORT}!`);
