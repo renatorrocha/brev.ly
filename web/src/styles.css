@@ -6,6 +6,7 @@
   body {
     font-family: 'Open Sans', sans-serif;
     background-color: var(--color-gray-200);
+   @apply max-w-7xl mx-auto
   }
   input {
     @apply focus:outline-none;

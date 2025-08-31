@@ -24,9 +24,9 @@ export const getShortLinkRoute: FastifyPluginAsyncZod = async (server) => {
 			},
 		},
 		async (request, reply) => {
-			const { shortLink } = request.params;
+			const { id } = request.params;
 
-			const shortLinkData = await getShortLink({ shortLink });
+			const shortLinkData = await getShortLink({ id });
 
 			if (!shortLinkData) {
 				return reply.status(404).send({

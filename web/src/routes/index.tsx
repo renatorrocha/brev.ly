@@ -17,7 +17,7 @@ function RouteComponent() {
 	const links = linksQuery.data;
 
 	return (
-		<div className="bg-gray-200 py-8 px-3 flex flex-col items-center justify-center max-w-7xl mx-auto">
+		<div className="py-8 px-3 flex flex-col items-center justify-center">
 			<figure className="mb-6 lg:self-start">
 				<img src={Logo} alt="logo" />
 			</figure>
