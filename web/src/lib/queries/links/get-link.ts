@@ -1,5 +1,5 @@
 import { api } from "@/lib/integrations/axios";
-import { queryOptions } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { linksKey } from "./keys";
 
 export interface Link {
@@ -9,15 +9,15 @@ export interface Link {
 	clicks: number;
 }
 
-async function fetchLink(shortLink: string): Promise<Link[]> {
-	const { data } = await api.get("/links");
+async function fetchLink(id: string): Promise<Link> {
+	const { data } = await api.get(`/links/${id}`);
 
 	return data;
 }
 
-export const LinkQueryOptions = (shortLink: string) => {
-	return queryOptions({
-		queryKey: [linksKey],
-		queryFn: () => fetchLink(shortLink),
+export const LinkQuery = (id: string) => {
+	return useQuery({
+		queryKey: [linksKey, id],
+		queryFn: () => fetchLink(id),
 	});
 };

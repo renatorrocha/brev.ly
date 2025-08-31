@@ -27,8 +27,8 @@ export function LinkCard({ originalLink, shortLink, clicks, id }: Link) {
 		<div className="flex items-center justify-between gap-2">
 			<div className="flex flex-col gap-1 overflow-hidden">
 				<TanstackLink
-					to={"/$short-link"}
-					params={{ "short-link": shortLink }}
+					to={"/$short-link-id"}
+					params={{ "short-link-id": id }}
 					className="text-blue-base text-md hover:underline truncate"
 				>
 					{`brev.ly/${shortLink}`}

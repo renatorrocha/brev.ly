@@ -4,16 +4,16 @@ import { db } from "@/infra/db";
 import { schema } from "@/infra/db/schemas";
 
 export const incrementAccessInput = z.object({
-	shortLink: z.string().regex(/^[a-zA-Z0-9]+$/),
+	id: z.string(),
 });
 
 type IncrementAccessInput = z.input<typeof incrementAccessInput>;
 
 export async function incrementAccess(input: IncrementAccessInput) {
-	const { shortLink } = input;
+	const { id } = input;
 
 	const shortLinkData = await db.query.short_links.findFirst({
-		where: eq(schema.short_links.shortLink, shortLink),
+		where: eq(schema.short_links.id, id),
 	});
 
 	if (!shortLinkData) {
@@ -26,4 +26,6 @@ export async function incrementAccess(input: IncrementAccessInput) {
 			clicks: sql`${schema.short_links.clicks} + 1`,
 		})
 		.where(eq(schema.short_links.id, shortLinkData.id));
+
+	return true;
 }

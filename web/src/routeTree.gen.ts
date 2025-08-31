@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ShortLinkRouteImport } from './routes/$short-link'
+import { Route as NotFoundRouteImport } from './routes/not-found'
+import { Route as ShortLinkIdRouteImport } from './routes/$short-link-id'
 import { Route as IndexRouteImport } from './routes/index'
 
-const ShortLinkRoute = ShortLinkRouteImport.update({
-  id: '/$short-link',
-  path: '/$short-link',
+const NotFoundRoute = NotFoundRouteImport.update({
+  id: '/not-found',
+  path: '/not-found',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShortLinkIdRoute = ShortLinkIdRouteImport.update({
+  id: '/$short-link-id',
+  path: '/$short-link-id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,37 +31,48 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/$short-link': typeof ShortLinkRoute
+  '/$short-link-id': typeof ShortLinkIdRoute
+  '/not-found': typeof NotFoundRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$short-link': typeof ShortLinkRoute
+  '/$short-link-id': typeof ShortLinkIdRoute
+  '/not-found': typeof NotFoundRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/$short-link': typeof ShortLinkRoute
+  '/$short-link-id': typeof ShortLinkIdRoute
+  '/not-found': typeof NotFoundRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$short-link'
+  fullPaths: '/' | '/$short-link-id' | '/not-found'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$short-link'
-  id: '__root__' | '/' | '/$short-link'
+  to: '/' | '/$short-link-id' | '/not-found'
+  id: '__root__' | '/' | '/$short-link-id' | '/not-found'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ShortLinkRoute: typeof ShortLinkRoute
+  ShortLinkIdRoute: typeof ShortLinkIdRoute
+  NotFoundRoute: typeof NotFoundRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/$short-link': {
-      id: '/$short-link'
-      path: '/$short-link'
-      fullPath: '/$short-link'
-      preLoaderRoute: typeof ShortLinkRouteImport
+    '/not-found': {
+      id: '/not-found'
+      path: '/not-found'
+      fullPath: '/not-found'
+      preLoaderRoute: typeof NotFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$short-link-id': {
+      id: '/$short-link-id'
+      path: '/$short-link-id'
+      fullPath: '/$short-link-id'
+      preLoaderRoute: typeof ShortLinkIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,7 +87,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ShortLinkRoute: ShortLinkRoute,
+  ShortLinkIdRoute: ShortLinkIdRoute,
+  NotFoundRoute: NotFoundRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

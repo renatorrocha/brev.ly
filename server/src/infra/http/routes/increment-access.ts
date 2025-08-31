@@ -7,7 +7,7 @@ import {
 
 export const incrementAccessRoute: FastifyPluginAsyncZod = async (server) => {
 	server.post(
-		"/links/:shortLink/increment-access",
+		"/links/:id/increment-access",
 		{
 			schema: {
 				summary: "Increment access to a short link",
@@ -24,9 +24,9 @@ export const incrementAccessRoute: FastifyPluginAsyncZod = async (server) => {
 			},
 		},
 		async (request, reply) => {
-			const { shortLink } = request.params;
+			const { id } = request.params;
 
-			const result = await incrementAccess({ shortLink });
+			const result = await incrementAccess({ id });
 
 			if (!result) {
 				return reply.status(404).send({

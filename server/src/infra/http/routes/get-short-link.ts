@@ -7,16 +7,14 @@ import {
 
 export const getShortLinkRoute: FastifyPluginAsyncZod = async (server) => {
 	server.get(
-		"/links/:shortLink",
+		"/links/:id",
 		{
 			schema: {
 				summary: "Get a short link",
 				tags: ["links"],
 				params: getShortLinkInput,
 				response: {
-					201: z.object({
-						originalLink: z.url(),
-					}),
+					200: z.any(),
 					404: z.object({
 						message: z.string(),
 					}),
@@ -34,7 +32,7 @@ export const getShortLinkRoute: FastifyPluginAsyncZod = async (server) => {
 				});
 			}
 
-			return reply.status(201).send(shortLinkData);
+			return reply.status(200).send(shortLinkData);
 		},
 	);
 };
