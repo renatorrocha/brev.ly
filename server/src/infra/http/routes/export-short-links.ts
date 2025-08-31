@@ -9,9 +9,6 @@ export const exportShortLinksRoute: FastifyPluginAsyncZod = async (server) => {
 			schema: {
 				summary: "Export all short links",
 				tags: ["links"],
-				querystring: z.object({
-					searchQuery: z.string().optional(),
-				}),
 				response: {
 					200: z.object({
 						reportUrl: z.string(),
@@ -19,12 +16,8 @@ export const exportShortLinksRoute: FastifyPluginAsyncZod = async (server) => {
 				},
 			},
 		},
-		async (request, reply) => {
-			const { searchQuery } = request.query;
-
-			const { reportUrl } = await exportShortLinks({
-				searchQuery,
-			});
+		async (_, reply) => {
+			const { reportUrl } = await exportShortLinks();
 
 			return reply.status(200).send({ reportUrl });
 		},

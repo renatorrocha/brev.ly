@@ -39,7 +39,10 @@ function RouteComponent() {
 				<div className="flex flex-col items-center gap-2">
 					<p>O link será aberto automaticamente em alguns instantes. </p>
 					<p>
-						Não foi redirecionado? <a href="/">Acesse aqui</a>
+						Não foi redirecionado?{" "}
+						<a href="/" className="text-blue-base">
+							Acesse aqui
+						</a>
 					</p>
 				</div>
 			</div>

@@ -1,27 +1,15 @@
 import { PassThrough, Transform } from "node:stream";
 import { pipeline } from "node:stream/promises";
 import { stringify } from "csv-stringify";
-import { ilike } from "drizzle-orm";
-import { z } from "zod";
 import { db, pg } from "@/infra/db";
 import { schema } from "@/infra/db/schemas";
 import { uploadFileToStorage } from "@/infra/storage/upload-file-to-storage";
-
-const exportShortLinksInput = z.object({
-	searchQuery: z.string().optional(),
-});
-
-type ExportShortLinksInput = z.input<typeof exportShortLinksInput>;
 
 type ExportShortLinksOutput = {
 	reportUrl: string;
 };
 
-export async function exportShortLinks(
-	input: ExportShortLinksInput,
-): Promise<ExportShortLinksOutput> {
-	const { searchQuery } = exportShortLinksInput.parse(input);
-
+export async function exportShortLinks(): Promise<ExportShortLinksOutput> {
 	const { sql, params } = db
 		.select({
 			id: schema.short_links.id,
@@ -31,11 +19,6 @@ export async function exportShortLinks(
 			createdAt: schema.short_links.createdAt,
 		})
 		.from(schema.short_links)
-		.where(
-			searchQuery
-				? ilike(schema.short_links.shortLink, `%${searchQuery}%`)
-				: undefined,
-		)
 		.toSQL();
 
 	const cursor = pg.unsafe(sql, params as string[]).cursor(2);

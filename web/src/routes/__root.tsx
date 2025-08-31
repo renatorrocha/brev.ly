@@ -13,7 +13,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 	component: () => (
 		<>
 			<Outlet />
-			<Toaster richColors />
+			<Toaster richColors closeButton />
 			<TanstackDevtools
 				config={{
 					position: "bottom-left",

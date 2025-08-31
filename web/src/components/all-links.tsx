@@ -1,3 +1,4 @@
+import { GenerateLinksReportMutation } from "@/lib/queries/links/generate-links-report";
 import type { Link } from "@/lib/queries/links/get-links";
 import { cn } from "@/lib/utils";
 import { DownloadSimple } from "phosphor-react";
@@ -8,6 +9,8 @@ export function AllLinks({
 	className,
 	links,
 }: { className: string; links: Link[] }) {
+	const { mutate: generateLinksReport, isPending } =
+		GenerateLinksReportMutation();
 	return (
 		<div
 			className={cn(
@@ -18,7 +21,11 @@ export function AllLinks({
 			<div className="flex items-center justify-between">
 				<h1 className="text-lg text-gray-600">Meus links</h1>
 
-				<Button className="flex items-center gap-2">
+				<Button
+					className="flex items-center gap-2"
+					onClick={() => generateLinksReport()}
+					disabled={isPending}
+				>
 					<DownloadSimple size={16} />
 					<p className="text-sm text-gray-500">Baixar CSV</p>
 				</Button>
