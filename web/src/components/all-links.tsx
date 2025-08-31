@@ -1,9 +1,13 @@
+import type { Link } from "@/lib/queries/links/get-links";
 import { cn } from "@/lib/utils";
 import { DownloadSimple } from "phosphor-react";
 import { LinkCard } from "./link-card";
 import { Button } from "./ui/button";
 
-export function AllLinks({ className }: { className: string }) {
+export function AllLinks({
+	className,
+	links,
+}: { className: string; links: Link[] }) {
 	return (
 		<div
 			className={cn(
@@ -21,11 +25,21 @@ export function AllLinks({ className }: { className: string }) {
 			</div>
 
 			<div className="flex flex-col gap-3">
-				<LinkCard
-					originalLink="https://www.googleasdasdasdasdasddasdasd.com"
-					shortLink="https://www.asdasd.com"
-					clicks={10}
-				/>
+				{links.map((link) => (
+					<LinkCard
+						key={link.id}
+						originalLink={link.originalLink}
+						shortLink={link.shortLink}
+						clicks={link.clicks}
+						id={link.id}
+					/>
+				))}
+
+				{links.length === 0 && (
+					<p className="text-sm text-gray-500 w-full text-center">
+						Nenhum link encontrado
+					</p>
+				)}
 			</div>
 		</div>
 	);

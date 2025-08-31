@@ -1,24 +1,27 @@
 import { Button } from "@/components/ui/button";
+import { DeleteLinkMutation } from "@/lib/queries/links/delete-link";
+import type { Link } from "@/lib/queries/links/get-links";
+import { Link as TanstackLink } from "@tanstack/react-router";
 import { Copy, Trash } from "phosphor-react";
 
-interface LinkCardProps {
-	originalLink: string;
-	shortLink: string;
-	clicks: number;
-}
+export function LinkCard({ originalLink, shortLink, clicks, id }: Link) {
+	const { mutate: deleteLink } = DeleteLinkMutation(id);
 
-export function LinkCard({ originalLink, shortLink, clicks }: LinkCardProps) {
 	return (
 		<div className="flex items-center justify-between gap-2">
 			<div className="flex flex-col gap-1 overflow-hidden">
-				<a
-					href={shortLink}
+				<TanstackLink
+					to={"/$short-link"}
+					params={{ "short-link": shortLink }}
 					className="text-blue-base text-md hover:underline truncate"
 				>
-					{shortLink}
-				</a>
+					{`Brev.ly/${shortLink}`}
+				</TanstackLink>
+
 				<a
 					href={originalLink}
+					target="_blank"
+					rel="noreferrer"
 					className="text-gray-500 text-sm hover:underline truncate"
 				>
 					{originalLink}
@@ -32,7 +35,7 @@ export function LinkCard({ originalLink, shortLink, clicks }: LinkCardProps) {
 					<Copy size={16} />
 				</Button>
 
-				<Button type="button">
+				<Button type="button" onClick={() => deleteLink()}>
 					<Trash size={16} />
 				</Button>
 			</div>
