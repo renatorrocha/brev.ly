@@ -1,7 +1,7 @@
 import Logo from "@/assets/logo.svg";
 import { LinkQuery } from "@/lib/queries/links/get-link";
 import { IncrementAccessMutation } from "@/lib/queries/links/increment-access";
-import { Navigate, createFileRoute } from "@tanstack/react-router";
+import { Navigate, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 export const Route = createFileRoute("/$short-link-id")({
@@ -10,6 +10,8 @@ export const Route = createFileRoute("/$short-link-id")({
 
 function RouteComponent() {
 	const { "short-link-id": shortLink } = Route.useParams();
+
+	const navigate = useNavigate();
 
 	const { data: link, isSuccess, isLoading } = LinkQuery(shortLink);
 	const { mutate: incrementAccess, isSuccess: incrementSuccess } =
@@ -24,8 +26,10 @@ function RouteComponent() {
 	useEffect(() => {
 		if (isSuccess && incrementSuccess && link?.originalLink) {
 			window.open(link.originalLink, "_blank");
+
+			navigate({ to: "/" });
 		}
-	}, [isSuccess, incrementSuccess, link?.originalLink]);
+	}, [isSuccess, incrementSuccess, link?.originalLink, navigate]);
 
 	if (!isSuccess && !isLoading) {
 		return <Navigate to="/not-found" />;
