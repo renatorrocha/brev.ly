@@ -7,7 +7,7 @@ export function AllLinks({ className }: { className: string }) {
 	return (
 		<div
 			className={cn(
-				"bg-gray-100 p-6 rounded-lg w-full flex flex-col gap-5",
+				"bg-gray-100 p-6 rounded-lg w-full flex flex-col gap-5 min-h-[400px]",
 				className,
 			)}
 		>
@@ -22,7 +22,7 @@ export function AllLinks({ className }: { className: string }) {
 
 			<div className="flex flex-col gap-3">
 				<LinkCard
-					originalLink="https://www.google.com"
+					originalLink="https://www.googleasdasdasdasdasddasdasd.com"
 					shortLink="https://www.asdasd.com"
 					clicks={10}
 				/>

@@ -9,15 +9,25 @@ interface LinkCardProps {
 
 export function LinkCard({ originalLink, shortLink, clicks }: LinkCardProps) {
 	return (
-		<div className="flex items-center justify-between">
-			<div className="flex flex-col gap-1">
-				<p className="text-blue-base text-md">{shortLink}</p>
-				<p className="text-gray-500 text-sm">{originalLink}</p>
+		<div className="flex items-center justify-between gap-2">
+			<div className="flex flex-col gap-1 overflow-hidden">
+				<a
+					href={shortLink}
+					className="text-blue-base text-md hover:underline truncate"
+				>
+					{shortLink}
+				</a>
+				<a
+					href={originalLink}
+					className="text-gray-500 text-sm hover:underline truncate"
+				>
+					{originalLink}
+				</a>
 			</div>
 
-			<p className="text-sm text-gray-500">{clicks} acessos</p>
-
 			<div className="flex gap-2 items-center">
+				<p className="text-sm text-gray-500 lg:mr-3">{clicks} acessos</p>
+
 				<Button type="button">
 					<Copy size={16} />
 				</Button>

@@ -5,7 +5,7 @@ export function NewLinkForm({ className }: { className: string }) {
 	return (
 		<form
 			className={cn(
-				"bg-gray-100 p-6 rounded-lg w-full flex flex-col gap-5",
+				"bg-gray-100 p-6 rounded-lg w-full flex flex-col gap-5 h-fit",
 				className,
 			)}
 		>
@@ -22,7 +22,7 @@ export function NewLinkForm({ className }: { className: string }) {
 
 				<button
 					type="submit"
-					className="px-5 rounded-lg text-md bg-blue-base text-white w-full h-12"
+					className="px-5 rounded-lg text-md bg-blue-base cursor-pointer text-white w-full h-12 hover:bg-blue-dark duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
 				>
 					Salvar link
 				</button>
